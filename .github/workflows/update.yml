@@ -1,0 +1,40 @@
+name: 更新 BA1SD 訊號
+
+on:
+  workflow_dispatch:          # 可在 GitHub 網頁上手動按「Run workflow」
+  schedule:                   # 時間為 UTC，週一到週五（GitHub 排程可能延遲 5–30 分鐘）
+    - cron: "40 13 * * 1-5"   # 美股開盤前
+    - cron: "40 19 * * 1-5"   # 收盤前 20 分鐘（美國夏令時間）
+    - cron: "40 20 * * 1-5"   # 收盤前 20 分鐘（美國冬令時間）
+    - cron: "30 20 * * 1-5"   # 收盤後（夏令）
+    - cron: "30 21 * * 1-5"   # 收盤後（冬令）
+    - cron: "15 6 * * 2-6"    # 隔天早上英國時間
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ba1sd
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: 產生網頁
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python generate.py
+      - name: 發布
+        run: |
+          git config user.name "ba1sd-bot"
+          git config user.email "ba1sd-bot@users.noreply.github.com"
+          git add docs
+          git diff --cached --quiet || git commit -m "更新訊號 $(date -u +'%Y-%m-%d %H:%M')"
+          git push
