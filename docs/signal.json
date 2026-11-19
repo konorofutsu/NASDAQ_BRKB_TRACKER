@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-18T21:34:41.457373+00:00",
- "confirmed_date": "2026-11-18",
+ "updated": "2026-11-19T01:26:45.608075+00:00",
+ "confirmed_date": "2026-11-17",
  "alloc": "BRK.B",
- "why": "觸發：BRK.B 回看報酬較強（投票 BRK.B 3 : Nasdaq 0）",
+ "why": "未觸發（日差距未超過門檻），維持原狀態",
  "prov_alloc": null,
  "lock": ""
 }
