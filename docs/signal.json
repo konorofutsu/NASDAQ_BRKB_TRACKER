@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-27T03:44:04.367242+00:00",
+ "updated": "2026-11-27T16:31:47.328703+00:00",
  "confirmed_date": "2026-11-25",
  "alloc": "BRK.B",
  "why": "未觸發（日差距未超過門檻），維持原狀態",
- "prov_alloc": null,
+ "prov_alloc": "BRK.B",
  "lock": ""
 }
